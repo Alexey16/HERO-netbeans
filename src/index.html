@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Калькулятор</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <h1>Калькулятор</h1>
+        <p>Добро пожаловать в лучший калькулятор в мире!</p>
+        <form name ="calc" action = "result.html" method = "GET">
+            Введите левый операнд<br>
+            <input type ="number" name = "operand1"><br>
+            Введите правый операнд:<br>
+            <input type ="number" name = "operand2"><br>
+
+            <div class="operation">
+                <p>Операция:</p>
+            <input type ="radio" name="operation" value="sum" checked>Сложение<br>
+            <input type ="radio" name ="operation" value="sub">Вычитание<br>
+            <input type ="radio" name ="operation" value="mult">Умножение<br>
+            <input type ="radio" name ="operation" value="div">Деление<br>
+            </div>
+
+            <input type ="submit" name ="submit" value="Вычислить">
+        </form>
+    </body>
+</html>
