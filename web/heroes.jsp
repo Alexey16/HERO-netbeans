@@ -170,6 +170,9 @@
                     }
                 %>
             </select><br>
+            
+             <input type="submit" value="Save" name="save" />
+             
         </form>
             <div class="foot">
                 <a class="home" href ="heroeslist.jsp">Back to the list of heroes</a>

@@ -116,6 +116,9 @@
             Ability restrictions<br>
             <input type="text" name="name" value="<%=(ability != null) ? ability.getName() : ""%>"/><br>
         <br>
+        
+         <input type="submit" value="Save" name="save" />
+         
         </form>
             <div class="foot">
                 <a class="home" href ="abilities.jsp">Back to the list of abilities</a>
