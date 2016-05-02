@@ -3,7 +3,7 @@
     Created on : 14.04.2016, 6:46:58
     Author     : Алексей
 --%>
-
+<%@page import="com.sun.javafx.image.impl.IntArgb"%>
 <%@page import="heroesbd.Entity.Universes"%>
 <%@page import="java.util.List"%>
 <%@page import="heroesbd.Entity.Heroes"%>
@@ -11,13 +11,12 @@
 <%@page import="heroesbd.DAO.HeroicAbilitiesDAO"%>
 <%@page import="heroesbd.DAO.HeroesDAO"%>
 <%@page import="heroesbd.DAO.AbilitiesDAO"%>
+<%@page import="java.net.URLDecoder"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
 <%!
-    private AbilitiesDAO abdao = new AbilitiesDAO();
     private HeroesDAO hdao = new HeroesDAO();
-    private HeroicAbilitiesDAO habdao = new HeroicAbilitiesDAO();
     private UniversesDAO undao = new UniversesDAO();
 %>
 
@@ -30,7 +29,7 @@
        try {
            hdao.delete(deleteHeroes);
        } catch (Exception e) {
-           System.err.print(e);
+           System.err.print(e); //!!!!!!!!!!!!1
        }
        
        response.sendRedirect("");   //отправленный запрос обрабатывается браузером
@@ -41,7 +40,7 @@
 <%
     //получение сссылки на редактируемый объект
     Heroes heroes = null;
-    String idStr = request.getParameter("editid");
+    String idStr = request.getParameter("editId");
     
     if(idStr != null){
         try {
@@ -73,8 +72,8 @@
         </h2>
         
         <p>
-            <% boolean isOk = true;
-               //сохранение героя при подтверждении формы
+            <% 
+
                if(request.getParameter("save") != null)
                {
                    if (heroes == null)
@@ -93,7 +92,6 @@
                    } else {
                        heroes.setName("");
                        out.write("<p class = 'err'>Is not given a name</p>");
-                       isOk = false;
                    }
                    
                    param = request.getParameter("gender");
@@ -102,7 +100,6 @@
                    } else {
                        heroes.setGender("");
                        out.write("<p class = 'err'>Is not given a gender</p>");
-                       isOk = false;
                    }
                    
                    param = request.getParameter("body_type");
@@ -111,7 +108,6 @@
                    } else {
                        heroes.setBodyType("");
                        out.write("<p class = 'err'>Is not given a body_type</p>");
-                       isOk = false;
                    }
                    
                    param = request.getParameter("location");
@@ -120,22 +116,18 @@
                    } else {
                        heroes.setLocation("");
                        out.write("<p class = 'err'>Is not given a location</p>");
-                       isOk = false;
                    }
                    
-                   param = request.getParameter("idUniverse");
+                   param = request.getParameter("id_universe");
                    if (!param.isEmpty()){
                        heroes.setIdUniverse(undao.getById(Integer.parseInt(param)));
                    }
                    
-                   if(isOk) {
-                       hdao.save(heroes);
-                       out.write("<p class = 'msg'>Saved</p>");
-                   }
-                   
-                }
-               
-               %>
+                   hdao.save(heroes);
+                   response.sendRedirect("");
+                   return;
+               }
+            %>
         </p> 
         
         <form method = "post">
@@ -161,12 +153,12 @@
                     for(Universes u: un)
                     {
                         out.write("<option ");
-                        if (heroes != null && heroes.getIdUniverse() == u)
+                        if (heroes != null && heroes.getIdUniverse().getIdUniverse() == u.getIdUniverse())
                         {
                             out.write("selected ");
                         }
                         
-                        out.write("value =" + u.getIdUniverse() + ">" + u.getTitle() + " " + u.getType() + "\n");
+                        out.write("value =" + u.getIdUniverse() + ">" + u.getTitle() + "\n");
                     }
                 %>
             </select><br>

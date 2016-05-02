@@ -30,6 +30,7 @@ public class HibernateUtil {
     
     public static void closeSession() {
         session.close();
+        session = null;
     }
     
 }

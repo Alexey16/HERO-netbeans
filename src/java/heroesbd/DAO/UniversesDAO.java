@@ -23,14 +23,18 @@ public class UniversesDAO {
     }
     
     public void save(Universes obj) {
+        
          Session session = HibernateUtil.getSession();
          session.beginTransaction();
          session.saveOrUpdate(obj);
-         session.getTransaction().commit(); 
+         session.getTransaction().commit();
+         HibernateUtil.closeSession();
+         
      }
      
      public void delete(Universes obj) {
          
+         HibernateUtil.closeSession();
          Session session = HibernateUtil.getSession();
          session.beginTransaction();
          session.delete(obj);

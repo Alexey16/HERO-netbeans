@@ -4,20 +4,16 @@
     Author     : Алексей
 --%>
 
+<%@page import="com.sun.javafx.image.impl.IntArgb"%>
 <%@page import="heroesbd.Entity.Abilities"%>
-<%@page import="heroesbd.DAO.UniversesDAO"%>
-<%@page import="heroesbd.DAO.HeroicAbilitiesDAO"%>
-<%@page import="heroesbd.DAO.HeroesDAO"%>
 <%@page import="heroesbd.DAO.AbilitiesDAO"%>
+<%@page import="java.net.URLDecoder"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
 <%!
-    private AbilitiesDAO abdao = new AbilitiesDAO();
-    private HeroesDAO hdao = new HeroesDAO();
-    private HeroicAbilitiesDAO habdao = new HeroicAbilitiesDAO();
-    private UniversesDAO undao = new UniversesDAO();
+    private AbilitiesDAO adao = new AbilitiesDAO();
 %>
 
 <%
@@ -25,14 +21,14 @@
    String delId = request.getParameter("delId");
    if(delId != null)
    {
-       Abilities deleteAvility = abdao.getById(Integer.parseInt(delId));
+       Abilities delAbil = adao.getById(Integer.parseInt(delId));
        try {
-           abdao.delete(deleteAvility);
+           adao.delete(delAbil);
        } catch (Exception e) {
-           System.err.print(e);
+           System.err.print(e); 
        }
        
-       response.sendRedirect("");   //отправленный запрос обрабатывается браузером
+       response.sendRedirect("abilities.jsp");
        return;
    }
 %>
@@ -40,12 +36,12 @@
 <%
     //получение сссылки на редактируемый объект
     Abilities ability = null;
-    String idStr = request.getParameter("editid");
+    String idStr = request.getParameter("editId");
     
     if(idStr != null){
         try {
             int id = Integer.parseInt(idStr);
-            ability = abdao.getById(id);
+            ability = adao.getById(id);
         } catch (Exception e){
             System.err.print(e);
         }
@@ -72,8 +68,8 @@
         </h2>
         
         <p>
-            <% boolean isOk = true;
-               //сохранение героя при подтверждении формы
+            <% 
+               
                if(request.getParameter("save") != null)
                {
                    if (ability == null)
@@ -87,37 +83,35 @@
                    } else {
                        ability.setName("");
                        out.write("<p class = 'err'>Is not given a name</p>");
-                       isOk = false;
                    }
                    
                    param = request.getParameter("restrictions");
                    if (!param.isEmpty()){
-                       ability.setRestrictions(new String(request.getParameter("gender").getBytes("iso-8859-1"),"UTF-8"));
+                       ability.setRestrictions(new String(request.getParameter("restrictions").getBytes("iso-8859-1"),"UTF-8"));
                    } else {
                        ability.setRestrictions("");
                        out.write("<p class = 'err'>Is not given a restrictions</p>");
-                       isOk = false;
                    } 
-                   
-                   if(isOk) {
-                       abdao.save(ability);
-                       out.write("<p class = 'msg'>Saved</p>");
-                   }
-                   
+
+                   adao.save(ability);
+                   response.sendRedirect("abilities.jsp");
+                   return;
+
                 }
                
                %>
         </p> 
         
         <form method = "post">
+            
             Name ability<br>
-            <input type="number" name="age" value="<%=(ability != null) ? ability.getName(): ""%>"/><br>
+            <input type="text" name="name" value="<%=(ability != null) ? ability.getName(): ""%>"/><br>
             
             Ability restrictions<br>
-            <input type="text" name="name" value="<%=(ability != null) ? ability.getName() : ""%>"/><br>
+            <input type="text" name="restrictions" value="<%=(ability != null) ? ability.getRestrictions() : ""%>"/><br>
         <br>
         
-         <input type="submit" value="Save" name="save" />
+        <input type="submit" value="Save" name="save" />
          
         </form>
             <div class="foot">

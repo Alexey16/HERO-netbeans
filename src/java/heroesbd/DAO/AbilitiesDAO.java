@@ -24,19 +24,22 @@ public class AbilitiesDAO {
     
     
     public void save(Abilities obj) {
+        
          Session session = HibernateUtil.getSession();
          session.beginTransaction();
          session.saveOrUpdate(obj);
-         session.getTransaction().commit(); 
+         session.getTransaction().commit();
+         HibernateUtil.closeSession();
+         
      }
      
-     public void delete(Abilities obj) {
+     public void delete(Abilities obj) {         
          
+         HibernateUtil.closeSession();
          Session session = HibernateUtil.getSession();
-         
-            session.beginTransaction();
-            session.delete(obj);
-            session.getTransaction().commit(); 
+         session.beginTransaction();
+         session.delete(obj);
+         session.getTransaction().commit(); 
          
      }
      

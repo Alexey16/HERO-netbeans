@@ -23,16 +23,21 @@ public class HeroicAbilitiesDAO {
     }
     
     public void save(HeroicAbilities obj) {
+        
          Session session = HibernateUtil.getSession();
          session.beginTransaction();
          session.saveOrUpdate(obj);
-         session.getTransaction().commit(); 
+         session.getTransaction().commit();
+         HibernateUtil.closeSession();
+         
      }
      
      public void delete(HeroicAbilities obj) {
          
+         HibernateUtil.closeSession();
          Session session = HibernateUtil.getSession();
          session.beginTransaction();
+         session.close();
          session.delete(obj);
          session.getTransaction().commit(); 
          

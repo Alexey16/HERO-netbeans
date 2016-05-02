@@ -27,14 +27,18 @@ public class HeroesDAO {
     }
     
      public void save(Heroes obj) {
+         
          Session session = HibernateUtil.getSession();
          session.beginTransaction();
          session.saveOrUpdate(obj);
-         session.getTransaction().commit(); 
+         session.getTransaction().commit();
+         HibernateUtil.closeSession();
+         
      }
      
      public void delete(Heroes obj) {
          
+         HibernateUtil.closeSession();
          Session session = HibernateUtil.getSession();
          session.beginTransaction();
          session.delete(obj);

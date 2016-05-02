@@ -32,15 +32,17 @@
                     out.write("<td>" + a.getName().toString() + "</td>");
                     out.write("<td>" + a.getRestrictions().toString() + "</td>");
                     out.write("<td>");
-                    out.write("<a href = 'heroes.jsp?editid="+ a.getIdAbility() +"'><img class = 'action' src = 'imgs/edit.png'></a>");
-                    out.write("<a href = 'heroes.jsp?delid="+ a.getIdAbility() +"'><img class = 'action' src = 'imgs/delete.png'></a>");
+                    out.write("<a href = 'ability.jsp?editId="+ a.getIdAbility() +"'><img class = 'action' src = 'imgs/edit.png'></a>");
+                    out.write("<a href = 'ability.jsp?delId="+ a.getIdAbility() +"'><img class = 'action' src = 'imgs/delete.png'></a>");
                     out.write("</td>");
                     out.write("</tr>");
                 }
             %>
         </table>
         <div class="foot">
-            <a class ="home" href = "ability.jsp">New Ability</a>
-            <a class ="home" href = "heroeslist.jsp">A list of Heroes</a>  
+        <a class ="home" href = "ability.jsp">New Ability</a>
+        <a class ="home" href = "heroeslist.jsp">A list of Heroes</a>
+        <a class ="home" href = "heroicabilities.jsp">A list of Heroic Abilities</a> 
+        </div>
     </body>
 </html>
